@@ -1,0 +1,241 @@
+exploração:
+# %% [markdown]
+# Lendo os dados
+
+# %%
+path_json = '../data_raw/dados_empresaA.json'
+
+# %%
+with open(path_json, 'r') as file:
+    print(file.readline())
+
+# %%
+with open(path_json, 'r') as file:
+    dados = file.readline()
+
+# %%
+dados
+
+# %%
+type(dados)
+
+# %%
+dados[10]
+
+# %%
+import json
+
+# %%
+with open(path_json, 'r') as file:
+    dados_json = json.load(file)
+
+# %%
+dados_json[0]
+
+# %%
+dados_json[1]
+
+# %%
+type(dados_json)
+
+# %%
+type(dados_json[0])
+
+# %%
+path_csv = '../data_raw/dados_empresaB.csv'
+
+# %%
+with open(path_csv, 'r') as file:
+    print(file.readlines())
+
+# %%
+with open(path_csv, 'r') as file:
+    print(file.readlines()[1])
+
+# %%
+with open(path_csv, 'r') as file:
+    dados_csv = file.readlines()
+
+# %%
+dados_csv[0]
+
+# %%
+dados_csv[1][0]
+
+# %%
+import csv
+
+# %%
+dados_csv = []
+with open(path_csv, 'r') as file:
+    spamreader = csv.reader(file, delimiter=',')
+    for row in spamreader:
+        dados_csv.append(row)
+
+# %%
+dados_csv[0][0]
+
+# %%
+type(dados_csv)
+
+# %%
+type(dados_csv[0])
+
+# %%
+dados_json[0]['Quantidade em Estoque']
+
+# %%
+dados_csv[1][3]
+
+# %%
+dados_csv = []
+with open(path_csv, 'r') as file:
+    spamreader = csv.DictReader(file, delimiter=',')
+    for row in spamreader:
+        dados_csv.append(row)
+
+# %%
+dados_json[0]
+
+# %%
+dados_csv[0]
+
+# %%
+nome_colunas_json = list(dados_json[0].keys())
+nome_colunas_json
+
+# %%
+len(nome_colunas_json)
+
+# %%
+nome_colunas_csv = list(dados_csv[0].keys())
+nome_colunas_csv
+
+# %%
+len(nome_colunas_csv)
+
+# %%
+key_mapping = {'Nome do Item': 'Nome do Produto',
+                'Classificação do Produto': 'Categoria do Produto',
+                'Valor em Reais (R$)': 'Preço do Produto (R$)',
+                'Quantidade em Estoque': 'Quantidade em Estoque',
+                'Nome da Loja': 'Filial',
+                'Data da Venda': 'Data da Venda'}
+key_mapping
+
+# %%
+new_dados_csv = []
+
+for old_dict in dados_csv:
+    dict_temp = {}
+    for old_key, value in old_dict.items():
+        dict_temp[key_mapping[old_key]] = value
+    new_dados_csv.append(dict_temp)
+new_dados_csv[0]
+
+# %%
+dados_csv[0]
+
+# %%
+len(dados_json)
+
+# %%
+len(new_dados_csv)
+
+# %%
+3123 + 1323
+
+# %%
+combined_list = []
+combined_list.extend(dados_json)
+combined_list.extend(new_dados_csv)
+
+# %%
+len(combined_list)
+
+# %%
+combined_list[0]
+
+# %%
+dados_json[0]
+
+# %%
+combined_list[4445]
+
+# %%
+new_dados_csv[1322]
+
+# %%
+new_dados_csv[-1]
+
+# %%
+nomes_colunas = list(combined_list[0].keys())
+nomes_colunas
+
+# %%
+path_dados_combinados = '../data_processed/dados_combinados.csv'
+
+with open(path_dados_combinados, 'w') as file:
+    writer = csv.DictWriter(file, fieldnames=nomes_colunas)
+    writer.writeheader()
+
+    for row in combined_list:
+        writer.writerow(row)
+
+# %%
+combined_list[0]
+
+# %%
+combined_list[-1]
+
+# %%
+combined_list[0]['Nome do Produto']
+
+# %%
+combined_list[-1]['Nome do Produto']
+
+# %%
+combined_list[-1]['Data da Venda']
+
+# %%
+combined_list[0]['Data da Venda']
+
+# %%
+combined_list[0].get('Data da Venda')
+
+# %%
+combined_list[-1].get('Data da Venda')
+
+# %%
+combined_list[0].get('Data da Venda', 'Indisponivel')
+
+# %%
+nomes_colunas = list(combined_list[-1].keys())
+nomes_colunas
+
+# %%
+dados_combinados_tabela = [nomes_colunas]
+
+for row in combined_list:
+    linha = []
+    for coluna in nomes_colunas:
+        linha.append(row.get(coluna, 'Indisponivel'))
+    dados_combinados_tabela.append(linha)
+
+# %%
+dados_combinados_tabela[0]
+
+# %%
+dados_combinados_tabela[1]
+
+# %%
+dados_combinados_tabela[-1]
+
+# %%
+path_dados_combinados = '../data_processed/dados_combinados.csv'
+
+with open(path_dados_combinados, 'w') as file:
+    writer = csv.writer(file)
+    writer.writerows(dados_combinados_tabela)
+
+# %%
